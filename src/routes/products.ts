@@ -39,13 +39,13 @@ router.get('/get-best-selling-products', async (req: Request, res: Response) => 
 
 router.get('/get-product', async (req: Request, res: Response) => {
     try {
-        const { productId } = req.query;
+        const { id } = req.query;
 
-        if (!productId || typeof productId !== 'string') {
+        if (!id || typeof id !== 'string') {
             return sendValidationErrorResponse(res, 'Product ID is required');
         }
 
-        const result = await productService.getProductById(productId);
+        const result = await productService.getProductById(id);
         handleServiceResponse(res, result);
     } catch (error) {
         console.error('Get product error:', error);
