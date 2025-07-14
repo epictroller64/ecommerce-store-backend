@@ -1,6 +1,6 @@
 import { db } from '../db/connection';
 import { products, categories, productVariants } from '../db/schema';
-import { eq, desc, and, gte, inArray } from 'drizzle-orm';
+import { eq, desc, and, gte, inArray, gt } from 'drizzle-orm';
 import {
     createSuccessResponse,
     createErrorResponse,
@@ -28,13 +28,21 @@ export class ProductService {
             // Build where conditions
             const whereConditions = [eq(products.isActive, true)];
 
-            if (filters) {
+            if (filters && Object.keys(filters).length > 0) {
+                console.log(`filters: ${JSON.stringify(filters)}`);
                 if (filters.categories && filters.categories.length > 0) {
                     whereConditions.push(inArray(products.categoryId, filters.categories));
                 }
 
                 if (filters.rating) {
                     whereConditions.push(gte(products.rating, filters.rating.toString()));
+                }
+                if (Object.keys(filters).includes('inStock')) {
+                    if (filters.inStock) {
+                        whereConditions.push(gt(productVariants.stock, 0));
+                    } else {
+                        whereConditions.push(eq(productVariants.stock, 0));
+                    }
                 }
             }
 

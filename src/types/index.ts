@@ -75,6 +75,7 @@ export interface ProductFilters {
     categories?: string[];
     inStock?: boolean;
     rating?: number;
+    searchQuery?: string;
 }
 
 export interface OrderItemFrontend {
