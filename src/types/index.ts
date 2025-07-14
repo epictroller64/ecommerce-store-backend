@@ -163,6 +163,7 @@ export interface SiteInfo {
     contactInfo?: ContactInfo;
 }
 
+
 export interface ContactInfo {
     email?: string;
     phone?: string;
@@ -313,4 +314,178 @@ export const createPaginatedResponse = <T>(
         timestamp: new Date().toISOString(),
         pagination,
     },
-}); 
+});
+
+export interface LanguageConfig {
+    defaultLanguage: string;
+    supportedLanguages: Language[];
+    fallbackLanguage: string;
+    autoDetect: boolean;
+    persistLanguage: boolean;
+}
+
+export interface Language {
+    code: string;
+    name: string;
+    nativeName: string;
+    flag?: string;
+    rtl?: boolean;
+    dateFormat: string;
+    numberFormat: {
+        decimal: string;
+        thousands: string;
+        currency: string;
+    };
+}
+
+export interface ThemeConfig {
+    primaryColor: string;
+    secondaryColor: string;
+    backgroundColor: string;
+    textColor: string;
+    accentColor: string;
+    borderRadius: string;
+    fontFamily: string;
+    fontSize: {
+        small: string;
+        medium: string;
+        large: string;
+        xlarge: string;
+    };
+}
+
+export interface HeroConfig {
+    titleTranslationKey: string;
+    subtitleTranslationKey: string;
+    images: string[];
+    autoPlay: boolean;
+    autoPlayInterval: number;
+}
+
+export interface MenuItem {
+    id: string;
+    label: string;
+    url: string;
+    children?: MenuItem[];
+    icon?: string;
+    external?: boolean;
+    translationKey: string;
+}
+
+export interface FooterLink {
+    id: string;
+    label: string;
+    url: string;
+    external?: boolean;
+    translationKey: string;
+}
+
+export interface SocialLink {
+    id: string;
+    platform: string;
+    url: string;
+    icon: string;
+}
+
+export interface ShippingMethod {
+    id: string;
+    nameTranslationKey: string;
+    price: number;
+    estimatedDaysTranslationKey: string;
+    enabled: boolean;
+}
+
+export interface PaymentMethodConfig {
+    id: string;
+    nameTranslationKey: string;
+    icon: string;
+    enabled: boolean;
+    processingFee?: number;
+}
+
+// Frontend SiteConfig interface matching the EXAMPLE structure
+export interface FrontendSiteConfig {
+    // Basic site info
+    siteInfo: {
+        name: string;
+        descriptionTranslationKey: string;
+        logo: string;
+        favicon: string;
+        domain: string;
+    };
+
+    // Theme configuration
+    theme: ThemeConfig;
+
+    // Content configuration
+    content: {
+        hero: HeroConfig;
+        featured: {
+            enabled: boolean;
+            titleTranslationKey: string;
+            subtitleTranslationKey: string;
+            productIds: string[];
+        };
+        categories: {
+            enabled: boolean;
+            titleTranslationKey: string;
+            subtitleTranslationKey: string;
+            featuredCategories: string[];
+        };
+    };
+
+    // Navigation configuration
+    navigation: {
+        mainMenu: MenuItem[];
+        footerLinks: FooterLink[];
+        socialLinks: SocialLink[];
+    };
+
+    // E-commerce settings
+    ecommerce: {
+        currency: string;
+        currencySymbol: string;
+        taxRate: number;
+        shippingMethods: ShippingMethod[];
+        paymentMethods: PaymentMethodConfig[];
+        inventoryManagement: boolean;
+        stockThreshold: number;
+    };
+
+    // SEO configuration
+    seo: {
+        titleTranslationKey: string;
+        descriptionTranslationKey: string;
+        keywords: string[];
+        ogImage: string;
+        canonicalUrl: string;
+    };
+
+    // Analytics and tracking
+    analytics: {
+        googleAnalyticsId?: string;
+        facebookPixelId?: string;
+        hotjarId?: string;
+    };
+
+    // Feature flags
+    features: {
+        reviews: boolean;
+        wishlist: boolean;
+        compare: boolean;
+        quickView: boolean;
+        liveChat: boolean;
+        newsletter: boolean;
+    };
+
+    // API configuration
+    api: {
+        baseUrl: string;
+        timeout: number;
+        retryAttempts: number;
+        cacheTimeout: number;
+    };
+
+    // Language configuration
+    language: LanguageConfig;
+} 

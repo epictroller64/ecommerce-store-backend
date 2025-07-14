@@ -25,10 +25,9 @@ router.get('/get-hero-images', async (req: Request, res: Response) => {
     }
 });
 
-// get site config
 router.get('/get-config', async (req: Request, res: Response) => {
     try {
-        const result = await siteService.getSiteInfo();
+        const result = await siteService.getSiteConfig();
         handleServiceResponse(res, result);
     } catch (error) {
         console.error('Get config error:', error);
