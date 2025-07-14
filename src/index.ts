@@ -15,6 +15,7 @@ import ordersRouter from './routes/orders';
 import paymentMethodsRouter from './routes/payment-methods';
 import deliveryMethodsRouter from './routes/delivery-methods';
 import siteRouter from './routes/site';
+import mockDataRouter from './routes/mock-data';
 
 
 const app = express();
@@ -43,6 +44,7 @@ app.use('/orders', ordersRouter);
 app.use('/payment-methods', paymentMethodsRouter);
 app.use('/delivery-methods', deliveryMethodsRouter);
 app.use('/site', siteRouter);
+app.use('/mock-data', mockDataRouter);
 
 //handle 404 routes
 app.use('*', (req, res) => {
@@ -66,6 +68,7 @@ app.listen(PORT, () => {
     console.log(`💳 Payment endpoints: http://localhost:${PORT}/payment-methods/get-payment-methods`);
     console.log(`🚚 Delivery endpoints: http://localhost:${PORT}/delivery-methods/get-delivery-methods`);
     console.log(`🏠 Site endpoints: http://localhost:${PORT}/site/get-site-info, /site/get-hero-images, /site/get-config`);
+    console.log(`🎲 Mock data endpoints: http://localhost:${PORT}/mock-data/generate-all, /mock-data/generate-categories, /mock-data/generate-products, /mock-data/clear-all`);
 });
 
 export default app; 
