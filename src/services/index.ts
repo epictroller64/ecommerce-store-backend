@@ -6,3 +6,9 @@ export * from './payment.service';
 export * from './delivery.service';
 export * from './site.service';
 export * from './product.service';
+
+// Initialize services
+import { config } from '../configuration';
+import { EmailService } from './email.service';
+
+export const emailService = new EmailService(config.emailProvider);

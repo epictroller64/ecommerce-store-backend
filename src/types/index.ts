@@ -494,3 +494,13 @@ export interface FrontendSiteConfig {
 export interface FraudValidationJob {
     orderId: string;
 }
+
+
+
+export interface EmailTemplate {
+    id: string
+    subject: string
+    body: string
+    template: string
+    variables: Record<string, string>
+}

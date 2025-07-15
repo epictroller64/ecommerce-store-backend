@@ -13,12 +13,22 @@ import {
     Variant
 } from '../types';
 import { fraudValidationQueue } from '../jobs/queues/fraudValidationQueue';
+import { emailService } from '.';
 
 export class OrderService {
 
     async markOrderStatus(orderId: string, status: string) {
         try {
             await db.update(orders).set({ status }).where(eq(orders.id, orderId));
+
+            // Send the emails
+            if (status === 'cancelled') {
+                await emailService.sendOrderCancelled(orderId);
+            } else if (status === 'confirmed') {
+                await emailService.sendOrderConfirmation(orderId);
+            }
+
+
             return createSuccessResponse(null, 'Order status updated successfully');
         } catch (error) {
             console.error('Mark order status error:', error);
