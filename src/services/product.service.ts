@@ -29,7 +29,6 @@ export class ProductService {
             const whereConditions = [eq(products.isActive, true)];
 
             if (filters && Object.keys(filters).length > 0) {
-                console.log(`filters: ${JSON.stringify(filters)}`);
                 if (filters.categories && filters.categories.length > 0) {
                     whereConditions.push(inArray(products.categoryId, filters.categories));
                 }

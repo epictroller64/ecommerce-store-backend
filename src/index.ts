@@ -10,6 +10,7 @@ import { errorHandler } from './middleware/errorHandler';
 import authRouter from './routes/auth';
 import usersRouter from './routes/users';
 import productsRouter from './routes/products';
+import staticRouter from './routes/static';
 import categoriesRouter from './routes/categories';
 import ordersRouter from './routes/orders';
 import paymentMethodsRouter from './routes/payment-methods';
@@ -45,6 +46,7 @@ app.use('/payment-methods', paymentMethodsRouter);
 app.use('/delivery-methods', deliveryMethodsRouter);
 app.use('/site', siteRouter);
 app.use('/mock-data', mockDataRouter);
+app.use('/static', staticRouter);
 
 //handle 404 routes
 app.use('*', (req, res) => {

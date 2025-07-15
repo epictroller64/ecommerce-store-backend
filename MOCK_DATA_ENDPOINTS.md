@@ -117,7 +117,7 @@ Removes all generated categories, products, and their variants.
 - **Sizes**: Small, Medium, Large, X-Large, XX-Large
 - **Prices**: Random price between $10-$210
 - **Stock**: Random stock between 1-100
-- **Images**: Random images from Picsum Photos
+- **Images**: 2 random images per variant from local static images (laptops, smartphones, monitors)
 - **Active Status**: 90% chance of being active
 
 ## Usage Examples
@@ -158,5 +158,6 @@ curl -X DELETE http://localhost:8080/mock-data/clear-all
 - All generated data is realistic and suitable for testing e-commerce applications
 - Product variants include realistic pricing and stock levels
 - Categories are distributed across various e-commerce domains
-- Images are randomly generated using Picsum Photos service
+- Images are randomly selected from local static images (laptops, smartphones, monitors)
+- Each product variant gets 2 unique images
 - All timestamps are automatically set to current time 

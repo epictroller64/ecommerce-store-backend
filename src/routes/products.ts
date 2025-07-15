@@ -8,7 +8,6 @@ const productService = new ProductService();
 router.get('/get-products', async (req: Request, res: Response) => {
     try {
         const { pagination, filters } = req.query;
-        console.log(`req query: ${JSON.stringify(req.query)}`);
         let paginationData;
         let filterData;
 

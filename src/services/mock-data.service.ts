@@ -73,6 +73,52 @@ export class MockDataService {
     private sizes = ['Small', 'Medium', 'Large', 'X-Large', 'XX-Large'];
     private materials = ['Cotton', 'Polyester', 'Leather', 'Plastic', 'Metal', 'Wood', 'Glass', 'Ceramic'];
 
+    private imageNames = [
+        // Original images
+        'fd8a8819-1ed3-4046-add1-90c412e4c10b.jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_0.jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_1.jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_2.jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_3.jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_0 (1).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_1 (1).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_1 (2).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_1 (3).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_2 (1).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_2 (2).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_2 (3).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_3 (1).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_3 (2).jpg',
+        'Leonardo_Lightning_XL_laptop_product_preview_image_with_whitel_3 (3).jpg',
+
+        // New smartphone images
+        'Leonardo_Phoenix_10_Highly_realistic_smartphone_product_previe_0.jpg',
+        'Leonardo_Phoenix_10_Highly_realistic_smartphone_product_previe_1.jpg',
+        'Leonardo_Phoenix_10_Highly_realistic_smartphone_product_previe_2.jpg',
+        'Leonardo_Phoenix_10_Highly_realistic_smartphone_product_previe_3.jpg',
+
+        // New monitor images
+        'Leonardo_Phoenix_10_A_sleek_and_modern_monitor_product_preview_0.jpg',
+        'Leonardo_Phoenix_10_A_sleek_and_modern_monitor_product_preview_1.jpg',
+        'Leonardo_Phoenix_10_A_sleek_and_modern_monitor_product_preview_2.jpg',
+        'Leonardo_Phoenix_10_A_sleek_and_modern_monitor_product_preview_3.jpg',
+
+        // New detailed laptop images
+        'Leonardo_Phoenix_10_Highly_detailed_laptop_product_preview_ima_0.jpg',
+        'Leonardo_Phoenix_10_Highly_detailed_laptop_product_preview_ima_1.jpg',
+        'Leonardo_Phoenix_10_Highly_detailed_laptop_product_preview_ima_2.jpg',
+        'Leonardo_Phoenix_10_Highly_detailed_laptop_product_preview_ima_3.jpg'
+    ];
+
+    private getRandomImageName(): string {
+        return this.imageNames[Math.floor(Math.random() * this.imageNames.length)];
+    }
+
+    private getRandomImageNames(count: number): string[] {
+        const shuffled = [...this.imageNames].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, count);
+    }
+
     async generateCategories(count: number): Promise<ApiResponse<any>> {
         try {
             const generatedCategories = [];
@@ -172,7 +218,7 @@ export class MockDataService {
                 name: `${color} ${size} Variant`,
                 price: price.toString(),
                 currency: 'USD',
-                images: [`https://picsum.photos/400/400?random=${Math.floor(Math.random() * 1000)}`],
+                images: this.getRandomImageNames(2).map(img => `/static/images/${img}`),
                 stock,
                 isActive: Math.random() > 0.1
             }).returning();
