@@ -12,8 +12,19 @@ import {
     ApiResponse,
     Variant
 } from '../types';
+import { fraudValidationQueue } from '../jobs/queues/fraudValidationQueue';
 
 export class OrderService {
+
+    async markOrderStatus(orderId: string, status: string) {
+        try {
+            await db.update(orders).set({ status }).where(eq(orders.id, orderId));
+            return createSuccessResponse(null, 'Order status updated successfully');
+        } catch (error) {
+            console.error('Mark order status error:', error);
+            return createErrorResponse('INTERNAL_ERROR', 'Failed to update order status');
+        }
+    }
     async createOrder(userId: string, orderData: CreateOrderRequest): Promise<ApiResponse<OrderFrontend>> {
         try {
             if (!orderData.items || orderData.items.length === 0) {
@@ -86,6 +97,11 @@ export class OrderService {
 
             // Get order with items for response
             const orderWithItems = await this.getOrderWithItems(newOrder[0].id);
+            try {
+                await fraudValidationQueue.add('validate-order', { orderId: newOrder[0].id });
+            } catch (error) {
+                // ignore, dont have redis on always
+            }
 
             return createSuccessResponse(orderWithItems, 'Order created successfully');
         } catch (error) {

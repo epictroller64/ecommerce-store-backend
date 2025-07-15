@@ -489,4 +489,8 @@ export interface FrontendSiteConfig {
 
     // Language configuration
     language: LanguageConfig;
-} 
+}
+
+export interface FraudValidationJob {
+    orderId: string;
+}
