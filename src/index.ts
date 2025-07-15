@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import { errorHandler } from './middleware/errorHandler';
+import { requestLogger } from './middleware/logger';
 
 //routes
 import authRouter from './routes/auth';
@@ -27,6 +28,7 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 app.get('/health', (req, res) => {
     // health check
@@ -61,16 +63,6 @@ app.use(errorHandler);
 
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on port ${PORT}`);
-    console.log(`📊 Health check: http://localhost:${PORT}/health`);
-    console.log(`🔐 Auth endpoints: http://localhost:${PORT}/auth/register-user, /auth/login-user`);
-    console.log(`👤 User endpoints: http://localhost:${PORT}/users/get-user, /users/update-user-settings`);
-    console.log(`🛍️  Product endpoints: http://localhost:${PORT}/products/get-products, /products/get-product, /products/get-best-selling-products`);
-    console.log(`📂 Category endpoints: http://localhost:${PORT}/categories/get-categories`);
-    console.log(`📦 Order endpoints: http://localhost:${PORT}/orders/create-order, /orders/get-orders, /orders/get-order, /orders/cancel-order, /orders/complete-checkout`);
-    console.log(`💳 Payment endpoints: http://localhost:${PORT}/payment-methods/get-payment-methods`);
-    console.log(`🚚 Delivery endpoints: http://localhost:${PORT}/delivery-methods/get-delivery-methods`);
-    console.log(`🏠 Site endpoints: http://localhost:${PORT}/site/get-site-info, /site/get-hero-images, /site/get-config`);
-    console.log(`🎲 Mock data endpoints: http://localhost:${PORT}/mock-data/generate-all, /mock-data/generate-categories, /mock-data/generate-products, /mock-data/clear-all`);
 });
 
 export default app; 
