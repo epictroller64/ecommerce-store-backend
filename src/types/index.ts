@@ -1,4 +1,5 @@
 import { InferSelectModel, InferInsertModel } from 'drizzle-orm';
+import { Request, Response } from 'express';
 import {
     users,
     products,
@@ -11,6 +12,7 @@ import {
     siteConfig,
     heroImages
 } from '../db/schema';
+import { IPaymentProvider } from '../interfaces/IPaymentProvider';
 
 // types for db
 export type User = InferSelectModel<typeof users>;
@@ -504,3 +506,16 @@ export interface EmailTemplate {
     template: string
     variables: Record<string, string>
 }
+export interface ConfigurationPaymentProvider {
+    id: string
+    provider: IPaymentProvider
+    webhookPath: string
+}
+
+
+export type WebhookConfig = {
+    id: string;
+    path: string;
+    handler: (req: Request, res: Response) => Promise<void>;
+}
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled' | 'refunded' | 'paid';

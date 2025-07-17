@@ -1,4 +1,4 @@
-import { config } from "../configuration";
+
 import { IEmailProvider } from "../interfaces/IEmailProvider";
 import { EmailTemplate } from "../types";
 
@@ -30,6 +30,58 @@ export class EmailService {
             subject: 'Order Cancelled',
             body: 'Your order has been cancelled',
             template: 'order-cancelled',
+            variables: {
+                orderId: orderId
+            }
+        }
+        await this.emailProvider.sendEmail(template);
+    }
+
+    async sendOrderProcessing(orderId: string) {
+        const template: EmailTemplate = {
+            id: 'order-processing',
+            subject: 'Order Processing',
+            body: 'Your order is now being processed',
+            template: 'order-processing',
+            variables: {
+                orderId: orderId
+            }
+        }
+        await this.emailProvider.sendEmail(template);
+    }
+
+    async sendOrderShipped(orderId: string) {
+        const template: EmailTemplate = {
+            id: 'order-shipped',
+            subject: 'Order Shipped',
+            body: 'Your order has been shipped',
+            template: 'order-shipped',
+            variables: {
+                orderId: orderId
+            }
+        }
+        await this.emailProvider.sendEmail(template);
+    }
+
+    async sendOrderDelivered(orderId: string) {
+        const template: EmailTemplate = {
+            id: 'order-delivered',
+            subject: 'Order Delivered',
+            body: 'Your order has been delivered',
+            template: 'order-delivered',
+            variables: {
+                orderId: orderId
+            }
+        }
+        await this.emailProvider.sendEmail(template);
+    }
+
+    async sendOrderRefunded(orderId: string) {
+        const template: EmailTemplate = {
+            id: 'order-refunded',
+            subject: 'Order Refunded',
+            body: 'Your order has been refunded',
+            template: 'order-refunded',
             variables: {
                 orderId: orderId
             }

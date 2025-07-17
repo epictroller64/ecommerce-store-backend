@@ -2,9 +2,9 @@ import { Router, Request, Response } from 'express';
 import { OrderService } from '../services/order.service';
 import { AuthenticatedRequest, authenticateToken } from '../middleware/auth';
 import { handleServiceResponse, sendAuthErrorResponse, sendValidationErrorResponse, sendInternalErrorResponse } from '../utils/responseUtils';
+import { orderService } from '../services';
 
 const router = Router();
-const orderService = new OrderService();
 
 router.post('/create-order', authenticateToken, async (req: AuthenticatedRequest, res: Response) => {
     try {

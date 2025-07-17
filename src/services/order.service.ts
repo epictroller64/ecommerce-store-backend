@@ -10,24 +10,48 @@ import {
     OrderItemFrontend,
     CompleteCheckoutResponse,
     ApiResponse,
-    Variant
+    Variant,
+    OrderStatus
 } from '../types';
 import { fraudValidationQueue } from '../jobs/queues/fraudValidationQueue';
-import { emailService } from '.';
+import { EmailService } from './email.service';
 
 export class OrderService {
 
-    async markOrderStatus(orderId: string, status: string) {
+    constructor(private emailService: EmailService) {
+    }
+
+    async markOrderStatus(orderId: string, status: OrderStatus) {
         try {
             await db.update(orders).set({ status }).where(eq(orders.id, orderId));
 
-            // Send the emails
-            if (status === 'cancelled') {
-                await emailService.sendOrderCancelled(orderId);
-            } else if (status === 'confirmed') {
-                await emailService.sendOrderConfirmation(orderId);
+            // Send appropriate emails based on status
+            switch (status) {
+                case 'pending':
+                    // No email for pending status (initial state)
+                    break;
+                case 'processing':
+                    await this.emailService.sendOrderProcessing(orderId);
+                    break;
+                case 'paid':
+                    await this.emailService.sendOrderConfirmation(orderId);
+                    break;
+                case 'shipped':
+                    await this.emailService.sendOrderShipped(orderId);
+                    break;
+                case 'delivered':
+                    await this.emailService.sendOrderDelivered(orderId);
+                    break;
+                case 'cancelled':
+                    await this.emailService.sendOrderCancelled(orderId);
+                    break;
+                case 'refunded':
+                    await this.emailService.sendOrderRefunded(orderId);
+                    break;
+                default:
+                    console.warn(`Unknown order status: ${status}`);
+                    break;
             }
-
 
             return createSuccessResponse(null, 'Order status updated successfully');
         } catch (error) {
