@@ -6,13 +6,16 @@ export * from './payment.service';
 export * from './delivery.service';
 export * from './site.service';
 export * from './product.service';
+export * from './review.service';
 
 // Initialize services
 import { config } from '../configuration';
 import { EmailService } from './email.service';
 import { OrderService } from './order.service';
 import { PaymentService } from './payment.service';
+import { ReviewService } from './review.service';
 
 export const emailService = new EmailService(config.emailProvider);
 export const paymentService = new PaymentService(config.paymentProviders, config.webhookHandlers);
 export const orderService = new OrderService(emailService);
+export const reviewService = new ReviewService();

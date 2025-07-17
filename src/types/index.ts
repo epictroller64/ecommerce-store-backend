@@ -10,13 +10,17 @@ import {
     paymentMethods,
     deliveryMethods,
     siteConfig,
-    heroImages
+    heroImages,
+    productRatings
 } from '../db/schema';
 import { IPaymentProvider } from '../interfaces/IPaymentProvider';
 
 // types for db
 export type User = InferSelectModel<typeof users>;
 export type NewUser = InferInsertModel<typeof users>;
+
+export type ProductRating = InferSelectModel<typeof productRatings>;
+export type NewProductRating = InferInsertModel<typeof productRatings>;
 
 export type Product = InferSelectModel<typeof products>;
 export type NewProduct = InferInsertModel<typeof products>;

@@ -181,4 +181,22 @@ export const orderItemsRelations = relations(orderItems, ({ one }) => ({
         fields: [orderItems.variantId],
         references: [productVariants.id],
     }),
-})); 
+}));
+
+
+export const productRatings = pgTable('product_ratings', {
+    id: uuid('id').primaryKey().defaultRandom(),
+    userId: uuid('user_id').references(() => users.id).notNull(),
+    productId: uuid('product_id').references(() => products.id).notNull(),
+    rating: integer('rating').notNull(),
+    comment: text('comment'),
+    createdAt: timestamp('created_at').defaultNow().notNull(),
+});
+
+export const productRatingsRelations = relations(productRatings, ({ one }) => ({
+    user: one(users, {
+        fields: [productRatings.userId],
+        references: [users.id],
+    }),
+}));
+

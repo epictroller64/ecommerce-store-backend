@@ -18,6 +18,8 @@ import paymentMethodsRouter from './routes/payment-methods';
 import deliveryMethodsRouter from './routes/delivery-methods';
 import siteRouter from './routes/site';
 import mockDataRouter from './routes/mock-data';
+import reviewsRouter from './routes/reviews';
+import { router as webhookRouter } from './routes/webhook';
 
 
 const app = express();
@@ -49,6 +51,8 @@ app.use('/delivery-methods', deliveryMethodsRouter);
 app.use('/site', siteRouter);
 app.use('/mock-data', mockDataRouter);
 app.use('/static', staticRouter);
+app.use('/reviews', reviewsRouter);
+app.use('/webhook', webhookRouter);
 
 //handle 404 routes
 app.use('*', (req, res) => {

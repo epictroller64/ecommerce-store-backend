@@ -60,7 +60,7 @@ export const authenticateToken = async (
             name: user[0].name || undefined,
             role: user[0].role,
         };
-        next();
+        return next();
     } catch (error) {
         if (error instanceof jwt.JsonWebTokenError) {
             return res.status(401).json(
@@ -90,5 +90,6 @@ export const requireRole = (roles: string[]) => {
         }
 
         next();
+        return
     };
 }; 
